@@ -1,0 +1,13 @@
+{
+  "name": "zen-lingual",
+  "version": "1.1.2",
+  "description": "Internationalization & Localization management for ZEN web SPA",
+  "main": "index.js",
+  "author": "AFRZ",
+  "license": "SEE LICENSE IN LICENSE",
+  "peerDependencies": {
+    "moment": ">=2.13.0",
+    "react": ">=15.1.0",
+    "react-redux": ">=4.4.5"
+  }
+}
