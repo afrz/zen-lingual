@@ -23,25 +23,22 @@ export default function LocaleProvider(Component) {
     },
 
     getChildContext() {
-      return this.getIntlHelpers();
-    },
-
-    //intl helpers injected in props + context
-    getIntlHelpers() {
-      return {
-        intl : {
-          nls,
-          localize,
-          locale: this.locale          
-        }
-      };
+      return this.intlHelpers;
     },
 
     //ensure that i18n engine is synced with the redux state
     syncWithStore({ intl }) {
 
-      //keep locale information
-      this.locale = i18n.init(intl).locale;
+      //intl helpers injected in props + context
+      //keep as an instance property to avoid uncessary recomputation
+      this.intlHelpers = {
+        intl: {
+          nls,
+          localize,
+          //re-init and keep locale information
+          locale: i18n.init(intl).locale
+        }
+      }
     },
 
     componentWillMount() {
@@ -61,7 +58,7 @@ export default function LocaleProvider(Component) {
     render() {
 
       //here we swap the 'intl' property from redux state with our intl helper (same than in context)
-      const enhancedProps = Object.assign({}, this.props, this.getIntlHelpers());
+      const enhancedProps = Object.assign({}, this.props, this.intlHelpers);
       return React.createElement(Component, enhancedProps);
     }
   })
